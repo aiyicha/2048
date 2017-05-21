@@ -10,6 +10,14 @@
         left:20px;
         border:1px solid orange
     }
+
+    #main{
+        margin:0 auto
+    }
+
+    body{
+        text-align:center
+    }
 </style>
 <script>
     var canvas = document.getElementById('canvas');
@@ -17,12 +25,28 @@
 
     var main = document.getElementById('main');
 
+    var colorNumber = {
+        2:'#FFC125',
+        4:'#FFB6C1',
+        8:'#FFA500',
+        16:'#FF83FA',
+        32:'#FF7F24',
+        64:'#FF6A6A',
+        128:'#FF4040',
+        256:'#FF1493',
+        512:'#FF00FF',
+        1024:'#E066FF',
+        2048:'#CD5555',
+        5096:'#CD1076'
+    };
+
     var ten = {
         left:0,
         top:0,
         color:'rgba(255,255,255,1)'
     };
     var tens = [];
+    var start_left,start_top,end_left,end_top;
 
     var getToward = function(keycode){
       if (keycode == 37){
@@ -60,13 +84,41 @@
             return;
         }else {
             e.preventDefault();
-            move(toward);
-            randomNumber();
-            changeColor();
-            drawSquares();
+            operate(toward);
         }
-
     });
+
+    main.addEventListener('touchstart',function(e){
+        e.preventDefault();
+        var touch = e.targetTouches[0];
+        start_left = touch.pageX;
+        start_top = touch.pageY;
+    });
+
+    main.addEventListener('touchend',function(e){
+        e.preventDefault();
+        var touch = e.changedTouches[0];
+        end_left = touch.pageX;
+        end_top = touch.pageY;
+        if(start_left>end_left && start_left-end_left>=Math.abs(start_top-end_top)){
+            operate(1);
+        }else if(start_left<end_left && end_left-start_left>=Math.abs(start_top-end_top)){
+            operate(2);
+        }else if(start_top>end_top && start_top-end_top>Math.abs(start_left-end_left)){
+            operate(3);
+        }else if(start_top<end_top && end_top-start_top>Math.abs(start_left-end_left)){
+            operate(4);
+        }
+    });
+
+    function operate(toward){
+        move(toward);
+
+        changeColor();
+        drawSquares();
+
+        setTimeout(randomNumber,100);
+    }
 
 //    main.addEventListener('click',function(e){
 //        canvas.focus();
@@ -85,13 +137,14 @@
         }else {
             alert('game over');
         }
+        changeColor();
+        drawSquares();
     }
 
     function changeColor(){
         for (var i =0,l=tens.length;i<l;i++){
             if(tens[i].number!==''){
-                var num = Math.log(parseInt(tens[i].number))/Math.log(2)
-                tens[i].color = 'rgba(150,'+(120+10*num)+','+(120+10*num)+',0.8)';
+                tens[i].color = colorNumber[tens[i].number];
             } else {
                 tens[i].color = 'rgba(200,200,200,0.9)';
             }
