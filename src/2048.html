@@ -1,6 +1,6 @@
 <!doctype html>
 <body>
-<div id="main">
+<div id="main" tabindex="1">
     <canvas id="canvas" width="800" height="800">Your browser is not supported!</canvas>
 </div>
 </body>
@@ -77,7 +77,7 @@
         drawSquares();
     }
 
-    window.addEventListener('keydown',function(e){
+    main.addEventListener('keydown',function(e){
         var toward = getToward(e.which);
         if (toward==0){
             return;
@@ -250,6 +250,8 @@
             }
         }
     }
+
+    canvas.focus();
 
     init();
 
