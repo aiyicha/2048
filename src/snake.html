@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>snake</title>
+</head>
+<body>
+<div id="main">
+    <canvas id="canvas" width="400" height="400"></canvas>
+</div>
+<style>
+    #main{
+        border:1px solid black;
+        text-align: center
+    }
+    #canvas{
+        margin:20px auto
+    }
+</style>
+
+<script>
+    var canvas = document.getElementById('canvas'),context = canvas.getContext('2d');
+
+    // 每次移动距离
+    var m_dis = 4;
+
+    // snake body
+    var bodies = [];
+
+    function newTen(){
+        var ten = {
+            left:Math.ceil(Math.random()*100),
+            top:Math.ceil(Math.random()*100)
+        };
+    }
+
+    function checkDeath(){
+        if(bodies[0].left < 0 || bodies[0].left > canvas.width || bodies[0].top < 0 || bodies[0].top > canvas.height){
+            alert("You've been dead!");
+            return true;
+        }
+        return false;
+    }
+
+</script>
+
+</body>
+</html>
