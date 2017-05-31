@@ -35,7 +35,8 @@
     }
 
     function checkDeath(){
-        if(bodies[0].left < 0 || bodies[0].left > canvas.width || bodies[0].top < 0 || bodies[0].top > canvas.height){
+        if(bodies[0].left < 0 || bodies[0].top < 0 ||
+                (bodies[0].left + m_dis) > canvas.width || (bodies[0].top + m_dis) > canvas.height){
             alert("You've been dead!");
             return true;
         }
